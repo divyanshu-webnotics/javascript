@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BgColor-changer</title>
+    <style>
+        body{
+            background-color: #212121;
+            color: #fff;
+            text-align: center;
+        }
+
+        .color-grid-container{
+            display: grid;
+            grid-template-columns: 200px 200px;
+            grid-template-rows: 200px 200px;
+            column-gap: 20px;
+            row-gap: 20px;
+            width: fit-content;
+            margin: auto;
+            margin-top: 50px;
+        }
+        
+        #yellow{
+            background-color: yellow;
+        }
+        #white{
+            background-color: white;
+        }
+        #green{
+            background-color: green;
+        }
+        #blue{
+            background-color: blue;
+        }
+
+        .color-grid-container div{
+            border: 2px solid rgb(0,0,0);
+        }
+
+        .procedure {
+            h3{
+                margin-bottom: 0;
+            }
+
+            h5{
+                margin-top: 0;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <section>
+        <div  class="container" >
+            <h2>Background Color Switcher</h2>
+            <div class="color-grid-container">
+                <div id="yellow"></div>
+                <div id="white"></div>
+                <div id="green"></div>
+                <div id="blue"></div>
+            </div>
+            <div class="procedure">
+                <h3>Click on any of the tile to change background color</h3>
+                <h5>To get back to default color click anywhere except on the tiles.</h5>
+            </div>
+        </div>
+    </section>
+</body>
+<script>
+    const bodyColor = window.getComputedStyle(document.body).backgroundColor;
+    console.log(bodyColor);
+    const grid = document.querySelector('.color-grid-container');
+    
+
+    document.body.addEventListener('click',function(e){
+        document.body.style.backgroundColor = bodyColor;
+    })
+    
+    grid.addEventListener('click', function(e){
+        console.log(e.target);
+        if(e.target.id!=""){
+            document.body.style.backgroundColor = e.target.id;
+            e.stopPropagation();
+            
+        }
+        else{
+            document.body.style.backgroundColor = bodyColor;
+        }
+         
+    })
+</script>
+</html>

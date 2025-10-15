@@ -1,0 +1,233 @@
+
+<!--
+Aspie Answers – Past & Future Events (Main Page)
+Drop this into a WordPress HTML block or your theme/page-builder.
+Includes: animated butterfly trail, responsive gallery, YouTube embeds, split cards, CTA, mini-footer.
+Replace the TODO asset URLs with your own uploads.
+-->
+
+<style>
+  /* ===== Brand quick vars (adjust once, they cascade) ===== */
+  :root{
+    --aa-grad-start:#cdb7ff;   /* lilac */
+    --aa-grad-mid:#b2d8ff;     /* sky */
+    --aa-grad-end:#a7ead6;     /* mint */
+    --aa-ink:#2f2a44;          /* deep lavender text */
+    --aa-ink-soft:#5a5574;     /* secondary */
+    --aa-white:#ffffff;
+    --aa-shadow: 0 10px 30px rgba(47,42,68,.12);
+    --aa-radius: 20px;
+  }
+
+  /* Core layout */
+  .aa-wrap{max-width:1200px;margin-inline:auto;padding:clamp(16px,3vw,28px);}  
+  .aa-grid{display:grid;gap:24px;}  
+  @media(min-width: 900px){.aa-grid-2{grid-template-columns:1fr 1fr;} .aa-grid-3{grid-template-columns:repeat(3,1fr);} }
+
+  /* Buttons */
+  .aa-btn{display:inline-block;padding:.9rem 1.2rem;border-radius:999px;text-decoration:none;font-weight:600;box-shadow:var(--aa-shadow); transition:transform .12s ease}
+  .aa-btn:hover{transform:translateY(-1px)}
+  .aa-btn-primary{background:var(--aa-ink);color:var(--aa-white);}  
+  .aa-btn-ghost{background:var(--aa-white);color:var(--aa-ink);}  
+
+  /* Hero */
+  #events-hero{position:relative;overflow:hidden;color:var(--aa-white);}
+  #events-hero .aa-hero-bg{position:absolute;inset:0;background:linear-gradient(90deg,var(--aa-grad-start),var(--aa-grad-mid),var(--aa-grad-end));}
+  #events-hero .aa-hero-overlay{position:absolute;inset:0;background:radial-gradient(70% 80% at 50% 50%, rgba(255,255,255,.18), transparent 60%);} 
+  #events-hero .aa-hero{position:relative;min-height:420px;display:grid;place-items:center;text-align:center;padding:64px 20px}
+  #events-hero h1{font-size:clamp(28px,4vw,44px);line-height:1.1;margin:0 0 12px}
+  #events-hero p{font-size:clamp(16px,2.1vw,20px);opacity:.95;margin:0 0 22px}
+  #events-hero .aa-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  #events-hero .aa-mark{position:absolute;inset:0;pointer-events:none;opacity:.28}
+  #events-hero .aa-trail{position:absolute;inset:0;pointer-events:none;opacity:.55}
+
+  /* Intro */
+  #events-intro .aa-card{background:var(--aa-white);border-radius:var(--aa-radius);box-shadow:var(--aa-shadow);padding:28px}
+  #events-intro figure{border-radius:var(--aa-radius);overflow:hidden;margin:0;height:100%}
+  #events-intro img{width:100%;height:100%;object-fit:cover}
+
+  /* Gallery */
+  #events-gallery .aa-thumb{aspect-ratio: 4 / 3; border-radius:16px;overflow:hidden;box-shadow:var(--aa-shadow);background:#f6f5fb}
+  #events-gallery .aa-thumb img{width:100%;height:100%;object-fit:cover}
+
+  /* Videos */
+  #events-videos .aa-video{position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;box-shadow:var(--aa-shadow);background:#000}
+  #events-videos iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+  /* Split cards */
+  #events-split .aa-slab{background:var(--aa-white);border-radius:var(--aa-radius);box-shadow:var(--aa-shadow);padding:28px;display:flex;flex-direction:column;gap:12px}
+  #events-split .aa-icon{font-size:28px;opacity:.7}
+
+  /* Memories strip */
+  #events-memories{background:linear-gradient(90deg,var(--aa-grad-start),var(--aa-grad-mid),var(--aa-grad-end));color:var(--aa-ink);}
+  #events-memories .aa-quote{font-size:clamp(18px,2.2vw,22px);font-weight:700;opacity:.95}
+  #events-memories .aa-avatars{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  #events-memories .aa-avatars img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.8);box-shadow:var(--aa-shadow)}
+
+  /* CTA */
+  #events-cta .aa-cta-box{background:var(--aa-white);border-radius:var(--aa-radius);box-shadow:var(--aa-shadow);padding:28px;text-align:center}
+
+  /* Mini footer */
+  #events-minifooter{background:#faf9fe;border-top:1px solid #ece8ff}
+  #events-minifooter .aa-links{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+  #events-minifooter a{color:var(--aa-ink-soft);text-decoration:none;font-weight:600}
+</style>
+
+<!-- ==================== 1) HERO ==================== -->
+<section id="events-hero" role="banner" aria-label="Past and Future Events hero">
+  <div class="aa-hero-bg"></div>
+  <div class="aa-hero-overlay"></div>
+
+  <!-- Butterfly‑infinity watermark (center) -->
+  <svg class="aa-mark" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="markGrad" x1="0" x2="1" y1="0" y2="0">
+        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.22"/>
+        <stop offset="100%" stop-color="#ffffff" stop-opacity="0.08"/>
+      </linearGradient>
+    </defs>
+    <g transform="translate(600,200) scale(1.1)">
+      <path fill="url(#markGrad)" d="M-180,-60c60-70,150-70,210,0c60,70,150,70,210,0c-40,90-120,140-210,140s-170-50-210-140z"/>
+      <circle cx="-120" cy="-20" r="18" fill="#fff" opacity="0.18"/>
+      <circle cx="120" cy="-20" r="18" fill="#fff" opacity="0.18"/>
+    </g>
+  </svg>
+
+  <!-- Butterfly trail animation (subtle) -->
+  <svg class="aa-trail" viewBox="0 0 1200 420" preserveAspectRatio="none" aria-hidden="true">
+    <path id="trailPath" d="M 80 320 C 260 260, 420 200, 600 240 S 960 340, 1120 220" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2" stroke-linecap="round"/>
+    <g>
+      <circle r="6" fill="#fff">
+        <animateMotion dur="14s" repeatCount="indefinite" rotate="auto">
+          <mpath href="#trailPath"/>
+        </animateMotion>
+      </circle>
+    </g>
+  </svg>
+
+  <div class="aa-hero aa-wrap">
+    <div>
+      <h1>Past Moments, Future Dreams — Together We Grow</h1>
+      <p>Explore our journey: highlights from previous events and what’s coming next.</p>
+      <div class="aa-cta">
+        <a class="aa-btn aa-btn-primary" href="#events-split">Explore Events</a>
+        <a class="aa-btn aa-btn-ghost" href="#events-videos">Watch Highlights</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 2) INTRO ==================== -->
+<section id="events-intro" class="aa-wrap" aria-label="Intro to Past and Future Events">
+  <div class="aa-grid aa-grid-2">
+    <div class="aa-card">
+      <h2>Our Journey So Far</h2>
+      <p>Over the years, Aspie Answers has hosted workshops, book readings, and community sessions designed to help people learn, share, and grow. This hub brings everything together — a celebration of where we’ve been and a window into what’s next.</p>
+      <ul>
+        <li>✔ Past event highlights with photos & recaps</li>
+        <li>✔ Upcoming workshops and sign‑ups</li>
+        <li>✔ Videos from talks and readings</li>
+      </ul>
+      <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+        <a class="aa-btn aa-btn-primary" href="#events-gallery">View Photos</a>
+        <a class="aa-btn aa-btn-ghost" href="#events-split">Past vs Future</a>
+      </div>
+    </div>
+    <figure aria-label="Featured event photo">
+      <!-- TODO: Replace with a real photo URL -->
+      <img src="/wp-content/uploads/2025/10/aspie-answers-event-feature.jpg" alt="Aspie Answers live workshop – attendees and presenter" />
+    </figure>
+  </div>
+</section>
+
+<!-- ==================== 3) GALLERY (photos) ==================== -->
+<section id="events-gallery" class="aa-wrap" aria-label="Event photo highlights">
+  <header style="margin-bottom:12px">
+    <h2>Highlights Gallery</h2>
+    <p class="aa-ink-soft">A glimpse at moments from workshops, talks, and book events.</p>
+  </header>
+  <div class="aa-grid aa-grid-3">
+    <!-- Replace each image src with real photos; add more items as needed -->
+    <a class="aa-thumb" href="/wp-content/uploads/2025/10/workshop-1.jpg" target="_blank" rel="noopener" aria-label="Open photo: Workshop 1"><img src="/wp-content/uploads/2025/10/workshop-1.jpg" alt="Workshop 1 highlight"/></a>
+    <a class="aa-thumb" href="/wp-content/uploads/2025/10/book-reading.jpg" target="_blank" rel="noopener" aria-label="Open photo: Reading Event"><img src="/wp-content/uploads/2025/10/book-reading.jpg" alt="Book reading highlight"/></a>
+    <a class="aa-thumb" href="/wp-content/uploads/2025/10/community-talk.jpg" target="_blank" rel="noopener" aria-label="Open photo: Community Talk"><img src="/wp-content/uploads/2025/10/community-talk.jpg" alt="Community talk highlight"/></a>
+  </div>
+  <!-- NOTE: If you prefer a slider, swap this grid for your carousel shortcode/plugin. -->
+</section>
+
+<!-- ==================== 4) VIDEOS (YouTube embeds) ==================== -->
+<section id="events-videos" class="aa-wrap" aria-label="Event videos">
+  <header style="margin-bottom:12px">
+    <h2>Watch Our Moments</h2>
+    <p class="aa-ink-soft">Short recaps and readings from our events.</p>
+  </header>
+  <div class="aa-grid aa-grid-3">
+    <!-- Replace the YouTube VIDEO_ID_* values with your actual IDs -->
+    <div class="aa-video"><iframe src="https://www.youtube.com/embed/VIDEO_ID_1" title="Workshop Highlights" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+    <div class="aa-video"><iframe src="https://www.youtube.com/embed/VIDEO_ID_2" title="Book Reading – Love, Life, Aspie" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+    <div class="aa-video"><iframe src="https://www.youtube.com/embed/VIDEO_ID_3" title="Mental Health Workshop Recap" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+  </div>
+  <p style="margin-top:12px" class="aa-ink-soft">Tip: You can paste full YouTube URLs like <code>https://www.youtube.com/watch?v=XXXX</code>, just keep only the ID after <code>embed/</code>.</p>
+</section>
+
+<!-- ==================== 5) SPLIT CARDS (Past vs Future) ==================== -->
+<section id="events-split" class="aa-wrap" aria-label="Browse past and upcoming events">
+  <div class="aa-grid aa-grid-2">
+    <article class="aa-slab" aria-labelledby="past-title">
+      <div class="aa-icon" aria-hidden>🕰️</div>
+      <h3 id="past-title">Past Events</h3>
+      <p class="aa-ink-soft">Catch up on workshops, talks, and community gatherings you may have missed. Photos, summaries, and replays where available.</p>
+      <!-- Optional thumbnail: insert <img> at the top of this card if you want -->
+      <a class="aa-btn aa-btn-primary" href="/events/past">View Past Events</a>
+    </article>
+
+    <article class="aa-slab" aria-labelledby="future-title">
+      <div class="aa-icon" aria-hidden>🌈</div>
+      <h3 id="future-title">Upcoming Events</h3>
+      <p class="aa-ink-soft">Discover what’s coming up next and join our growing community.</p>
+      <a class="aa-btn aa-btn-primary" href="/events/upcoming">View Upcoming Events</a>
+    </article>
+  </div>
+</section>
+
+<!-- ==================== 6) MEMORIES STRIP (optional) ==================== -->
+<section id="events-memories" aria-label="Event memories strip">
+  <div class="aa-wrap" style="display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+    <div class="aa-quote">“Every event, every story — a part of our shared journey.”</div>
+    <div class="aa-avatars">
+      <!-- Replace with real tiny circle photos (attendees/venues) -->
+      <img src="/wp-content/uploads/2025/10/memory-1.jpg" alt="Memory 1"/>
+      <img src="/wp-content/uploads/2025/10/memory-2.jpg" alt="Memory 2"/>
+      <img src="/wp-content/uploads/2025/10/memory-3.jpg" alt="Memory 3"/>
+      <img src="/wp-content/uploads/2025/10/memory-4.jpg" alt="Memory 4"/>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 7) CTA ==================== -->
+<section id="events-cta" class="aa-wrap" aria-label="Stay updated">
+  <div class="aa-cta-box">
+    <h3>Want to be part of our next event?</h3>
+    <p class="aa-ink-soft">Join the newsletter or subscribe on YouTube to hear about new dates.</p>
+    <div class="aa-cta" style="justify-content:center">
+      <a class="aa-btn aa-btn-primary" href="/newsletter">Join Our Newsletter</a>
+      <a class="aa-btn aa-btn-ghost" href="https://youtube.com/@aspie_answers" target="_blank" rel="noopener">Subscribe on YouTube</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 8) MINI FOOTER NAV ==================== -->
+<section id="events-minifooter" aria-label="Quick navigation">
+  <div class="aa-wrap">
+    <nav class="aa-links" aria-label="Mini navigation">
+      <a href="/coaching">Coaching with Aspie</a>
+      <a href="/workshops">Workshops</a>
+      <a href="/courses">Online Courses</a>
+      <a href="/store">Store</a>
+    </nav>
+  </div>
+</section>
+
+<!-- End of main page code -->
+past-future-events.html
+Displaying website creating chart.png.
