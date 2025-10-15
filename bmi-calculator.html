@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI calculator</title>
+    <style>
+        body{
+            background-color: #212121;
+            color: #fff
+        }
+        input[type="text"]{
+            margin-left:10px;
+        }
+
+        input[type="submit"]{
+            padding: 5px 10px;
+            margin-top: 20px;
+        }
+
+        .reference{
+            margin-top: 50px;
+        }
+
+        .form-wrapper{
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <div class="container">
+            <h2>BMI Calculator</h2>
+            <div class="form-wrapper">
+                <form>
+                    <label for="height">Height in cm</label>
+                    <input type="text" id="height" name="height" name="height"><br><br>
+                    <label for="weight">Weight in Kg</label>
+                    <input type="text" id="weight" name="weight"><br><br>
+                     <div id="results"></div>
+                    <input type="submit" value="Calculate">
+                </form>
+            </div>
+            
+            <div class="reference">
+                <strong><h3>BMI Weight Guide</h3></strong>
+                <span>Under Weight = Less than 18.6</span><br>
+                <span>Normal Range = 18.6 and 24.9</span><br>
+                <span>Overweight = Greater than 24.9</span><br>
+            </div>
+        </div>
+    </section>
+</body>
+
+<script>
+    const form = document.querySelector('.form-wrapper').querySelector('form');
+    const resultWrapper = document.getElementByID('results');
+
+    form.addEventListener('submit', function(e){
+        e.preventDefault();
+            const height = (parseInt(document.querySelector('#height').value)/100)**2;
+    const weight = parseInt(document.querySelector('input[name=weight]').value);
+    const result = weight/height;
+        const resultOutput = document.createTextNode(`${result}`)
+        resultWrapper.appendChild(resultOutput);
+    })
+
+</script>
+</html>
