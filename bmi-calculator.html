@@ -37,7 +37,7 @@
                     <input type="text" id="height" name="height" name="height"><br><br>
                     <label for="weight">Weight in Kg</label>
                     <input type="text" id="weight" name="weight"><br><br>
-                     <div id="results"></div>
+                     <div id="results" style="opacity: 0;">0</div>
                     <input type="submit" value="Calculate">
                 </form>
             </div>
@@ -54,15 +54,28 @@
 
 <script>
     const form = document.querySelector('.form-wrapper').querySelector('form');
-    const resultWrapper = document.getElementByID('results');
+    const resultWrapper = document.getElementById('results');
+    const submitBtn = document.querySelector('input[type="submit"]');
 
     form.addEventListener('submit', function(e){
         e.preventDefault();
             const height = (parseInt(document.querySelector('#height').value)/100)**2;
     const weight = parseInt(document.querySelector('input[name=weight]').value);
-    const result = weight/height;
-        const resultOutput = document.createTextNode(`${result}`)
-        resultWrapper.appendChild(resultOutput);
+    console.log(weight);
+    const result = (weight/height).toFixed(1);
+    let prediction = "";
+    if(result<18.6) prediction = "under-weight";
+    else if(18.6<=result<=24.9) prediction = "normal";
+    else prediction = "over-weight";
+    resultWrapper.innerHTML = `BMI: ${result}&nbsp&nbsp&nbspprediction: ${prediction}`;
+        // const resultOutput = document.createTextNode(`${result}`)
+        // resultWrapper.appendChild(resultOutput);
+        resultWrapper.style.opacity = '1';
+    submitBtn.disabled = true;
+    })
+
+    form.addEventListener('focusin',function(e){
+      submitBtn.disabled = false; 
     })
 
 </script>
